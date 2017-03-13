@@ -1,0 +1,29 @@
+﻿<md-card>
+    <md-card-content>
+        <md-list>
+            <h3 md-subheader>Object configurator</h3>
+            <md-list-item *ngFor="let objectConfig of objectConfigs">
+                <md-icon md-list-avatar>settings_applications</md-icon>
+                <h4 md-line>{{objectConfig.Title}}</h4>
+                <p md-line>Properties: {{objectConfig.Properties.length}} </p>
+                <button md-mini-fab (click)="editObjectConfig(objectConfig.Id)"><md-icon>edit</md-icon></button>
+            </md-list-item>
+        </md-list>
+        <button md-raised-button color="primary" (click)="addObjectConfig()">Add config</button>
+    </md-card-content>
+</md-card>
+
+<md-card>
+    <md-card-content>
+        <md-list>
+            <h3 md-subheader>Object editor</h3>
+            <md-list-item *ngFor="let objectValue of objectValues">
+                <md-icon md-list-avatar>developer_board</md-icon>
+                <h4 md-line>{{objectConfigById(objectValue.ObjectConfigId).Title}}</h4>
+                <p md-line> {{objectValue.Id}} </p>
+                <button md-mini-fab (click)="editObjectValue(objectValue.Id)"><md-icon>edit</md-icon></button>
+            </md-list-item>
+        </md-list>
+        <button md-raised-button color="primary" (click)="addObject()">Add object</button>
+    </md-card-content>
+</md-card>

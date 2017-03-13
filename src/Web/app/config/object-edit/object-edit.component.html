@@ -1,0 +1,22 @@
+﻿<h1 md-dialog-title *ngIf="isEdit">Edit Object</h1>
+<h1 md-dialog-title *ngIf="!isEdit">Add Object</h1>
+<md-dialog-content>
+    <div class="property-line">
+        <md-select *ngIf="!isEdit" class="property-type" placeholder="Object Type" (change)="changeType($event.value)">
+            <md-option *ngFor="let objectConfig of objectConfigs" [value]="objectConfig.Id">{{objectConfig.Title}}</md-option>
+        </md-select>
+        <md-input-container *ngIf="isEdit" class="property-type">
+            <input mdInput placeholder="Object Type" [value]="selectedObjectConfig.Title" disabled >
+        </md-input-container>
+    </div>
+    <form [formGroup]="objectForm" class="dialog-content">
+        <object-value-edit [objectValue]="objectForm" [objectConfig]="selectedObjectConfig" [submitted]="submitted"></object-value-edit>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions>
+    <div class="dialog-actions">
+        <button md-raised-button color="primary" class="dialog-action" (click)="save()">Save</button>
+        <button md-raised-button md-dialog-close class="dialog-action">Cancel</button>
+    </div>
+</md-dialog-actions>

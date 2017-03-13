@@ -1,0 +1,50 @@
+﻿<div [ngSwitch]="propertyConfig.Type">
+    <div class="property-line" *ngIf="propertyConfig.Type == propertyType.Number || propertyConfig.Type == propertyType.String">
+        <md-input-container class="input-container">
+            <input mdInput placeholder="{{propertyConfig.Name}}" [formControl]="valueControl.controls['Value']">
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('required') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.IsRequiredErrorMessage}}
+            </md-hint>
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('pattern') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.RegexErrorMessage}}
+            </md-hint>
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('minValue') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.MinValueErrorMessage}}
+            </md-hint>
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('maxValue') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.MaxValueErrorMessage}}
+            </md-hint>
+        </md-input-container>
+    </div>
+    <div class="property-line" *ngIf="propertyConfig.Type == propertyType.Boolean">
+        <md-input-container class="input-container">
+            <md-slide-toggle class="example-margin" [color]="primary" [formControl]="valueControl.controls['Value']">
+                {{propertyConfig.Name}}
+            </md-slide-toggle>
+        </md-input-container>
+    </div>
+    <div class="property-line" *ngIf="propertyConfig.Type == propertyType.Date">
+        <md-input-container class="input-container">
+            <input mdInput type="date" placeholder="{{propertyConfig.Name}}" [formControl]="valueControl.controls['Value']">
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('required') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.IsRequiredErrorMessage}}
+            </md-hint>
+            <md-hint class="invalid-input" *ngIf="valueControl.controls['Value'].hasError('pattern') && (valueControl.controls['Value'].touched || submitted)">
+                {{propertyConfig.RegexErrorMessage}}
+            </md-hint>
+        </md-input-container>
+    </div>
+    <div *ngIf="propertyConfig.Type == propertyType.List">
+        <div class="example-section" *ngIf="!propertyConfig.IsMultiSelect">
+            <label class="example-margin">{{propertyConfig.Name}}:</label>
+            <md-radio-group [formControl]="valueControl.controls['Value']">
+                <md-radio-button *ngFor="let listItemKey of keys(propertyConfig.ListItems)" class="example-margin" [value]="listItemKey">{{propertyConfig.ListItems[listItemKey]}}</md-radio-button>
+            </md-radio-group>
+        </div>
+        <section class="example-section" *ngIf="propertyConfig.IsMultiSelect">
+            <label class="example-margin">{{propertyConfig.Name}}:</label>
+            <md-checkbox *ngFor="let listItemKey of keys(propertyConfig.ListItems)" class="example-margin" [checked]="isValueChecked(listItemKey)" (change)="checkboxChange($event.checked, listItemKey)">{{propertyConfig.ListItems[listItemKey]}}</md-checkbox>
+        </section>
+    </div>
+
+</div>

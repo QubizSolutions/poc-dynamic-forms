@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC5-Angular2-Material</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://rawgit.com/angular/material2-builds/master/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/hammerjs/hammer.min.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+        document.write('<base href="' + document.location + '" />');
+        System.import('app').catch(function (err) { console.error(err); });
+    </script>
+</body>
+</html>

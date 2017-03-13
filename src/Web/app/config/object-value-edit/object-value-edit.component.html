@@ -1,0 +1,11 @@
+﻿<h4>Properties</h4>
+<div *ngFor="let objectProperty of objectValue.controls.Properties.controls; let i=index">
+    <h5>Property: {{objectProperty.controls['Id'].value}}</h5>
+    <div class="property-line">
+        <property-value [valueControl]="objectProperty" 
+                        [propertyConfig]="propertyConfig(objectProperty.controls['Id'].value)"
+                        [submitted]="submitted" 
+                        (markFormDirty)="markFormDirty($event)">
+        </property-value>
+    </div>
+</div>

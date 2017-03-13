@@ -1,0 +1,100 @@
+﻿<h1 md-dialog-title *ngIf="objectConfig.Id">Edit Object config</h1>
+<h1 md-dialog-title *ngIf="!objectConfig.Id">Add Object config</h1>
+<md-dialog-content>
+    <form [formGroup]="configForm" class="dialog-content">
+        <md-input-container class="input-container">
+            <input mdInput placeholder="First Name" [formControl]="configForm.controls['Title']">
+            <md-hint class="invalid-input" *ngIf="configForm.controls['Title'].hasError('required') && (configForm.controls['Title'].touched || submitted)">You must include a title.</md-hint>
+        </md-input-container>
+        <h4>Properties</h4>
+        <div *ngFor="let configProperty of configForm.controls.Properties.controls; let i=index">
+            <h5>Property: {{configProperty.controls['Id'].value}}</h5>
+            <div class="property-line">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="Name" [formControl]="configProperty.controls['Name']">
+                    <md-hint class="invalid-input" *ngIf="configProperty.controls['Name'].hasError('required') && (configProperty.controls['Name'].touched || submitted)">You must include a name.</md-hint>
+                </md-input-container>
+                <button md-mini-fab (click)="removeconfigProperty(i)"><md-icon>clear</md-icon></button>
+            </div>
+            <div class="property-line">
+                <md-select class="property-type" placeholder="Type" [formControl]="configProperty.controls['Type']" (change)="changeType(i, $event.value)">
+                    <md-option [value]="0">None</md-option>
+                    <md-option [value]="1">Number</md-option>
+                    <md-option [value]="2">String</md-option>
+                    <md-option [value]="3">Boolean</md-option>
+                    <md-option [value]="4">Date</md-option>
+                    <md-option [value]="5">Object</md-option>
+                    <md-option [value]="6">List</md-option>
+                </md-select>
+            </div>
+            <div *ngIf="configProperty.controls['Type'].value == propertyType.List">
+                <div class="property-line">
+                    <md-slide-toggle class="example-margin" [color]="primary" [formControl]="configProperty.controls['IsMultiSelect']">
+                        IsMultiSelect
+                    </md-slide-toggle>
+                </div>
+                <div *ngFor="let listItem of configProperty.controls.ListItems.controls; let listItemIndex=index">
+                    <div class="property-line">
+                        <md-input-container class="input-container">
+                            <input mdInput placeholder="List item {{listItemIndex + 1}}" [formControl]="listItem.controls['Value']">
+                            <md-hint class="invalid-input" *ngIf="listItem.controls['Value'].hasError('required') && (listItem.controls['Value'].touched || submitted)">This field is required</md-hint>
+                        </md-input-container>
+                        <button md-mini-fab (click)="removeListProperty(i, listItemIndex)"><md-icon>remove</md-icon></button>
+                    </div>
+                </div>
+                <button md-raised-button (click)="addListItem(i)">Add List item</button>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['Type'].value != propertyType.List">
+                <md-slide-toggle class="example-margin" [color]="primary" [formControl]="configProperty.controls['IsRequired']">
+                    IsRequired
+                </md-slide-toggle>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['IsRequired'].value">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="IsRequiredErrorMessage" [formControl]="configProperty.controls['IsRequiredErrorMessage']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['Type'].value != propertyType.List">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="Regex" [formControl]="configProperty.controls['Regex']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['Regex'].value">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="RegexErrorMessage" [formControl]="configProperty.controls['RegexErrorMessage']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['Type'].value == propertyType.Number || configProperty.controls['Type'].value == propertyType.Date">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="MinValue" [formControl]="configProperty.controls['MinValue']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['MinValue'].value">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="MinValueErrorMessage" [formControl]="configProperty.controls['MinValueErrorMessage']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['Type'].value == propertyType.Number || configProperty.controls['Type'].value == propertyType.Date">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="MaxValue" [formControl]="configProperty.controls['MaxValue']">
+                </md-input-container>
+            </div>
+            <div class="property-line" *ngIf="configProperty.controls['MaxValue'].value">
+                <md-input-container class="input-container">
+                    <input mdInput placeholder="MaxValueErrorMessage" [formControl]="configProperty.controls['MaxValueErrorMessage']">
+                </md-input-container>
+            </div>
+        </div>
+        <div>
+            <button md-raised-button color="primary" (click)="addProperty()">Add property</button>
+        </div>
+
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions>
+    <div class="dialog-actions">
+        <button md-raised-button color="primary" class="dialog-action" (click)="save()">Save</button>
+        <button md-raised-button md-dialog-close class="dialog-action">Cancel</button>
+    </div>
+</md-dialog-actions>

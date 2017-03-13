@@ -1,0 +1,32 @@
+﻿.dialog-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-container{
+    margin-bottom: 10px;
+}
+
+.invalid-input{
+    color: #f44336;
+}
+
+.property-line{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.property-type{
+    margin-top: 15px;
+}
+
+.dialog-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.dialog-action{
+    margin-right: 10px;
+}
