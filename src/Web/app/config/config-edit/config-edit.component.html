@@ -14,7 +14,7 @@
                     <input mdInput placeholder="Name" [formControl]="configProperty.controls['Name']">
                     <md-hint class="invalid-input" *ngIf="configProperty.controls['Name'].hasError('required') && (configProperty.controls['Name'].touched || submitted)">You must include a name.</md-hint>
                 </md-input-container>
-                <button md-mini-fab (click)="removeconfigProperty(i)"><md-icon>clear</md-icon></button>
+                <button md-mini-fab (click)="removeObjectProperty(i)"><md-icon>clear</md-icon></button>
             </div>
             <div class="property-line">
                 <md-select class="property-type" placeholder="Type" [formControl]="configProperty.controls['Type']" (change)="changeType(i, $event.value)">
